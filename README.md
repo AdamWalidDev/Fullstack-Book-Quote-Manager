@@ -1,63 +1,26 @@
-# RedRiverTest — Book & Citation Manager
 
-A full-stack web application for managing books and personal citations, built with **.NET 9 Web API** and **Angular 20**. Users can register, log in, and perform full CRUD operations on books and their own citation collection.
+# Fullstack Book & Quote Manager
 
-Built as part of the **Red River internship acceptance project**.
+Formerly known as "RedRiverTest.Api"
+
+This project is a fullstack application for managing books and quotes. It features user authentication, book management, citation/quote management, and a modern Angular frontend.
 
 ## Features
+- User registration and login
+- Add, edit, and delete books
+- Manage and organize quotes/citations
+- Responsive UI with Angular
 
-- **JWT Authentication** — Register and log in; tokens are issued by the API and attached to requests via an Angular HTTP interceptor.
-- **Book Management** — View, add, edit, and delete books (shared across all users).
-- **My Citations** — Each user gets a personal collection of quotes with full CRUD. Seeded with 5 default quotes on first visit.
-- **Dark / Light Theme** — Toggle with automatic OS preference detection, persisted in `localStorage`.
-- **Responsive UI** — Bootstrap 5 grid and components with Font Awesome icons.
-- **API Documentation** — Scalar API reference available at `/scalar` in development.
+## Live Demo
+- [Vercel Deployment](<your-vercel-link>)
+- [Render Deployment](<your-render-link>)
 
-## Tech Stack
+## Repository
+- [GitHub Repository](https://github.com/AdamWalid-hustler/Fullstack-Book-Quote-Manager)
 
-| Layer     | Technology                                          |
-| --------- | --------------------------------------------------- |
-| Backend   | .NET 9, ASP.NET Core Web API, Entity Framework Core |
-| Database  | SQLite (`books.db`)                                 |
-| Auth      | JWT Bearer tokens                                   |
-| Frontend  | Angular 20 (standalone components, signals)         |
-| Styling   | Bootstrap 5, SCSS, Font Awesome 7                   |
-| Testing   | Jasmine + Karma (frontend)                          |
+---
 
-## API Endpoints
-
-### Auth — `api/auth` (public)
-
-| Method | Route                | Description          |
-| ------ | -------------------- | -------------------- |
-| POST   | `api/auth/register`  | Register a new user  |
-| POST   | `api/auth/login`     | Log in, receive JWT  |
-
-### Books — `api/books` (requires auth)
-
-| Method | Route             | Description        |
-| ------ | ----------------- | ------------------ |
-| GET    | `api/books`       | List all books     |
-| GET    | `api/books/{id}`  | Get a single book  |
-| POST   | `api/books`       | Create a book      |
-| PUT    | `api/books/{id}`  | Update a book      |
-| DELETE | `api/books/{id}`  | Delete a book      |
-
-### Citations — `api/my-citations` (requires auth, user-scoped)
-
-| Method | Route                   | Description                |
-| ------ | ----------------------- | -------------------------- |
-| GET    | `api/my-citations`      | List your citations        |
-| GET    | `api/my-citations/{id}` | Get one of your citations  |
-| POST   | `api/my-citations`      | Create a citation          |
-| PUT    | `api/my-citations/{id}` | Update your citation       |
-| DELETE | `api/my-citations/{id}` | Delete your citation       |
-
-## Prerequisites
-
-- [.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
-- [Node.js](https://nodejs.org/) 18+ and npm
-- [Angular CLI](https://angular.dev/tools/cli) (`npm install -g @angular/cli`)
+Feel free to update the links above with your actual deployment and repository URLs.
 
 ## Getting Started
 
