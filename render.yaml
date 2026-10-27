@@ -8,9 +8,9 @@ services:
       - key: Jwt__SigningKey
         sync: false  # you'll set this manually in the Render dashboard
       - key: Jwt__Issuer
-        value: RedRiverTest
+        value: Quotebook
       - key: Jwt__Audience
-        value: RedRiverTest
+        value: Quotebook
       - key: Jwt__ExpirationMinutes
         value: "60"
       - key: AllowedOrigins__0

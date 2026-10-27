@@ -10,7 +10,7 @@ import { ThemeService } from './services/theme.service';
   styleUrl: './app.scss'
 })
 export class App {
-  protected readonly title = signal('RedRiverTest');
+  protected readonly title = signal('Quotebook');
   protected auth = inject(AuthService);
   protected themeService = inject(ThemeService);
   protected navOpen = false;

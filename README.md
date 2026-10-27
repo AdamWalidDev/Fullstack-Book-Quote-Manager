@@ -1,26 +1,42 @@
+# Quotebook
 
-# Fullstack Book & Quote Manager
+**A fullstack book & quote manager** built with **.NET 9 Web API** and **Angular 20**.
 
-Formerly known as "RedRiverTest.Api"
+Browse a shared book library and keep a personal collection of your favourite quotes. Includes JWT authentication, protected routes, per-user data, and a light/dark theme.
 
-This project is a fullstack application for managing books and quotes. It features user authentication, book management, citation/quote management, and a modern Angular frontend.
-
-## Features
-- User registration and login
-- Add, edit, and delete books
-- Manage and organize quotes/citations
-- Responsive UI with Angular
+> Originally built as an internship technical assignment, later extended and rebranded with persistent users, hashed passwords, a one-click demo account, and UI polish.
 
 ## Live Demo
-- [Vercel Deployment](<your-vercel-link>)
-- [Render Deployment](<your-render-link>)
+
+- **App:** <your-frontend-link>
+- **API:** https://redriver-test-assignment.onrender.com
+
+Click **Try the demo** on the login page — no sign-up needed (demo account: `demo` / `demo1234`).
+
+> [!NOTE]
+> The API runs on Render's free tier, so the first request after inactivity can take ~30 seconds while the server wakes up.
+
+## Features
+
+- User registration and login with **JWT** authentication
+- Passwords hashed with ASP.NET Core `PasswordHasher` (PBKDF2 + salt)
+- Shared book library: add, edit, and delete books
+- Personal quote collection with inline editing (each user sees only their own)
+- One-click demo account, seeded automatically on startup
+- Route guards + HTTP interceptor for protected pages
+- Responsive Bootstrap UI with light/dark theme
+
+## Tech Stack
+
+| Layer    | Technologies                                                   |
+| -------- | -------------------------------------------------------------- |
+| Backend  | .NET 9, ASP.NET Core Web API, EF Core, SQLite, JWT Bearer, Scalar |
+| Frontend | Angular 20 (standalone components, signals), Bootstrap, Font Awesome |
+| DevOps   | Docker, Render                                                 |
 
 ## Repository
+
 - [GitHub Repository](https://github.com/AdamWalid-hustler/Fullstack-Book-Quote-Manager)
-
----
-
-Feel free to update the links above with your actual deployment and repository URLs.
 
 ## Getting Started
 
@@ -46,15 +62,16 @@ Open [http://localhost:4200](http://localhost:4200) in your browser.
 ## Project Structure
 
 ```
-RedRiverTest.Api/               # .NET 9 Web API
+RedRiverTest.Api/               # .NET 9 Web API (folder name kept from the original assignment)
 ├── Controllers/
 │   ├── AuthController.cs       # Register & login endpoints
 │   ├── BooksController.cs      # Book CRUD (all users)
-│   └── CitationsController.cs  # Citation CRUD (per user)
+│   └── CitationsController.cs  # Quote CRUD (per user)
 ├── Models/
 │   ├── Book.cs
-│   └── Citation.cs
-├── Auth/                       # JWT options, token service, user store
+│   ├── Citation.cs
+│   └── User.cs
+├── Auth/                       # JWT options, token service, DB user store (hashed passwords)
 ├── Data/
 │   └── AppDbContext.cs         # EF Core context (SQLite)
 ├── Program.cs                  # App configuration & middleware
@@ -81,6 +98,6 @@ JWT settings are in `appsettings.Development.json` for local development. For pr
 | Variable             | Description                       |
 | -------------------- | --------------------------------- |
 | `Jwt__SigningKey`    | A strong random 32+ character key |
-| `Jwt__Issuer`       | `RedRiverTest`                    |
-| `Jwt__Audience`     | `RedRiverTest`                    |
+| `Jwt__Issuer`       | `Quotebook`                       |
+| `Jwt__Audience`     | `Quotebook`                       |
 | `AllowedOrigins__0` | Your frontend URL                 |

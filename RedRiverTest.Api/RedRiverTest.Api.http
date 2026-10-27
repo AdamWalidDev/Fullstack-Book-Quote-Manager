@@ -1,6 +1,12 @@
-@RedRiverTest.Api_HostAddress = http://localhost:5268
+@Quotebook_HostAddress = http://localhost:5268
 
-GET {{RedRiverTest.Api_HostAddress}}/weatherforecast/
+### Log in with the demo account
+POST {{Quotebook_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{ "username": "demo", "password": "demo1234" }
+
+### List books
+GET {{Quotebook_HostAddress}}/api/books
 Accept: application/json
 
-###

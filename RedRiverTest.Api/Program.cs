@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RedRiverTest.Api.Auth;
@@ -49,11 +50,12 @@ builder.Services
 
 builder.Services.AddAuthorization();
 
-// Simple in-memory users + token creator.
-builder.Services.AddSingleton<IUserStore, InMemoryUserStore>();
+// Users stored in the database (hashed passwords) + token creator.
+builder.Services.AddScoped<IPasswordHasher<RedRiverTest.Api.Models.User>, PasswordHasher<RedRiverTest.Api.Models.User>>();
+builder.Services.AddScoped<IUserStore, DbUserStore>();
 builder.Services.AddSingleton<IJwtTokenService, JwtTokenService>();
 
-// In-memory database for now.
+// SQLite database for books, citations and users.
 builder.Services.AddDbContext<RedRiverTest.Api.Data.AppDbContext>(options =>
 	options.UseSqlite("Data Source=books.db"));
 
@@ -77,15 +79,19 @@ using (var scope = app.Services.CreateScope())
     db.Database.Migrate();
 	if (!db.Books.Any())
 	{
-       // Seed one book so the list is not empty.
-		db.Books.Add(new RedRiverTest.Api.Models.Book
-		{
-			Title = "Clean Code",
-			Author = "Robert Martin",
-			PublishedDate = new DateTime(2010, 8, 7)
-		});
+		// Seed a few books so the list is not empty.
+		db.Books.AddRange(
+			new RedRiverTest.Api.Models.Book { Title = "Clean Code", Author = "Robert C. Martin", PublishedDate = new DateTime(2008, 8, 1) },
+			new RedRiverTest.Api.Models.Book { Title = "The Pragmatic Programmer", Author = "Andrew Hunt & David Thomas", PublishedDate = new DateTime(1999, 10, 20) },
+			new RedRiverTest.Api.Models.Book { Title = "Refactoring", Author = "Martin Fowler", PublishedDate = new DateTime(1999, 7, 8) },
+			new RedRiverTest.Api.Models.Book { Title = "Designing Data-Intensive Applications", Author = "Martin Kleppmann", PublishedDate = new DateTime(2017, 3, 16) }
+		);
 		db.SaveChanges();
 	}
+
+	// Demo account so visitors can try the app without registering.
+	// Citations for it are created automatically on first visit (see CitationsController).
+	scope.ServiceProvider.GetRequiredService<IUserStore>().TryRegister(DemoAccount.Username, DemoAccount.Password);
 }
 
 // Configure the HTTP request pipeline.
@@ -94,7 +100,7 @@ if (app.Environment.IsDevelopment())
 	app.MapOpenApi();
  app.MapScalarApiReference(options =>
 	{
-		options.WithTitle("RedRiverTest API");
+		options.WithTitle("Quotebook API");
 	});
 }
 
@@ -112,3 +118,9 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public static class DemoAccount
+{
+	public const string Username = "demo";
+	public const string Password = "demo1234";
+}
