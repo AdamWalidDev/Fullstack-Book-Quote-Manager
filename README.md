@@ -8,7 +8,7 @@ Browse a shared book library and keep a personal collection of your favourite qu
 
 ## Live Demo
 
-- **App:** <your-frontend-link>
+- **App:** https://bok-citathantering.vercel.app
 - **API:** https://redriver-test-assignment.onrender.com
 
 Click **Try the demo** on the login page — no sign-up needed (demo account: `demo` / `demo1234`).
@@ -101,3 +101,8 @@ JWT settings are in `appsettings.Development.json` for local development. For pr
 | `Jwt__Issuer`       | `Quotebook`                       |
 | `Jwt__Audience`     | `Quotebook`                       |
 | `AllowedOrigins__0` | Your frontend URL                 |
+
+For the deployed frontend, set `AllowedOrigins__0` to `https://bok-citathantering.vercel.app`
+(without a path or trailing slash). In the Render dashboard, save environment changes with
+**Save and deploy** so the running API uses them. The same origin is included in
+`render.yaml` and the API's default configuration; localhost remains allowed for development.

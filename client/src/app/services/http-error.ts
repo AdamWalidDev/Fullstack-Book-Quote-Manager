@@ -9,7 +9,7 @@ export function describeHttpError(err: unknown, fallback: string): string {
   switch (err.status) {
     case 0:
       // Network error, CORS block, or server not reachable.
-      return 'Could not reach the server. It may be waking up (free hosting) — please try again in 30 seconds.';
+      return 'Could not connect to the server. Please try again shortly.';
     case 401:
       return 'Invalid username or password.';
     case 400:
