@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { describeHttpError } from '../services/http-error';
 
 // Public demo account (created automatically by the API at startup).
 const DEMO_USERNAME = 'demo';
@@ -44,9 +45,9 @@ export class Login {
         this.loading.set(false);
         this.router.navigate(['/']);
       },
-      error: () => {
+      error: (err) => {
         this.loading.set(false);
-        this.error.set('Invalid username or password');
+        this.error.set(describeHttpError(err, 'Login failed. Please try again.'));
       },
     });
   }

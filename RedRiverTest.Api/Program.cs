@@ -59,14 +59,21 @@ builder.Services.AddSingleton<IJwtTokenService, JwtTokenService>();
 builder.Services.AddDbContext<RedRiverTest.Api.Data.AppDbContext>(options =>
 	options.UseSqlite("Data Source=books.db"));
 
+// Allowed frontend origins: everything in config (AllowedOrigins array, or a comma-separated
+// AllowedOrigins__0 env var on Render) PLUS localhost for development. Merged, not replaced.
+var allowedOrigins = (builder.Configuration.GetSection("AllowedOrigins").Get<string[]>() ?? Array.Empty<string>())
+	.SelectMany(o => o.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+	.Select(o => o.TrimEnd('/'))
+	.Append("http://localhost:4200")
+	.Distinct(StringComparer.OrdinalIgnoreCase)
+	.ToArray();
+
 builder.Services.AddCors(options =>
 {
 	options.AddPolicy("AngularDev", policy =>
 	{
-		var origins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>()
-			?? new[] { "http://localhost:4200" };
 		policy
-			.WithOrigins(origins)
+			.WithOrigins(allowedOrigins)
 			.AllowAnyHeader()
 			.AllowAnyMethod();
 	});
@@ -104,6 +111,7 @@ if (app.Environment.IsDevelopment())
 	});
 }
 
+app.Logger.LogInformation("CORS allowed origins: {Origins}", string.Join(", ", allowedOrigins));
 app.UseCors("AngularDev");
 
 // Only redirect to HTTPS in development; Render handles HTTPS at the load balancer.

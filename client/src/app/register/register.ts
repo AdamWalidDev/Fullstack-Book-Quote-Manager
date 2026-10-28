@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { describeHttpError } from '../services/http-error';
 
 @Component({
   selector: 'app-register',
@@ -29,9 +30,9 @@ export class Register {
         this.loading.set(false);
         this.router.navigate(['/login']);
       },
-      error: () => {
+      error: (err) => {
         this.loading.set(false);
-        this.error.set('Registration failed. Username may already be taken.');
+        this.error.set(describeHttpError(err, 'Registration failed. Username may already be taken.'));
       },
     });
   }
