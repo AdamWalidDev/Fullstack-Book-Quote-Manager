@@ -5,7 +5,7 @@
       <span>{{ title() }}</span>
     </a>
 
-    @if (auth.isLoggedIn()) {
+    @if (auth.isLoggedIn() && !isAuthRoute) {
       <nav class="nav-links" [class.open]="navOpen">
         <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="navOpen = false">
           <i class="fas fa-book"></i>Library
@@ -25,14 +25,14 @@
         <i class="fas" [class.fa-sun]="themeService.theme() === 'dark'" [class.fa-moon]="themeService.theme() === 'light'"></i>
       </button>
 
-      @if (auth.isLoggedIn()) {
+      @if (auth.isLoggedIn() && !isAuthRoute) {
         <button class="btn btn-sm btn-ghost d-none d-md-inline-flex align-items-center" (click)="auth.logout()">
           <i class="fas fa-arrow-right-from-bracket me-2"></i>Sign out
         </button>
         <button class="icon-btn d-md-none" (click)="navOpen = !navOpen" aria-label="Toggle navigation">
           <i class="fas" [class.fa-bars]="!navOpen" [class.fa-xmark]="navOpen"></i>
         </button>
-      } @else {
+      } @else if (!isAuthRoute) {
         <a routerLink="/login" class="btn btn-sm btn-ghost">Sign in</a>
         <a routerLink="/register" class="btn btn-sm btn-primary">Get started</a>
       }
@@ -40,14 +40,14 @@
   </div>
 </header>
 
-<main class="container app-main">
+<main class="container app-main" [class.auth-main-layout]="isAuthRoute">
   <router-outlet />
 </main>
 
-<footer class="container app-footer">
+<footer class="container app-footer" [class.auth-footer]="isAuthRoute">
   <span>© {{ year }} Quotebook · Built with .NET 9 &amp; Angular 20</span>
   <span class="d-flex gap-3">
-    @if (auth.isLoggedIn()) {
+    @if (auth.isLoggedIn() && !isAuthRoute) {
       <a href="#" class="d-md-none" (click)="$event.preventDefault(); auth.logout()">Sign out</a>
     }
     <a href="https://github.com/AdamWalidDev/Fullstack-Book-Quote-Manager" target="_blank" rel="noopener">

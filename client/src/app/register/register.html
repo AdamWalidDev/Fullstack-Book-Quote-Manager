@@ -1,6 +1,6 @@
 <app-auth-shell>
-  <h1>Create your account</h1>
-  <p class="subtitle">Start your own quote collection in seconds.</p>
+  <h1 class="auth-title">Create your account</h1>
+  <p class="auth-subtitle">Start your own quote collection in seconds.</p>
 
   @if (error()) {
     <div class="alert alert-danger app-alert">
@@ -10,16 +10,16 @@
 
   <form (ngSubmit)="onSubmit()">
     <div class="mb-3">
-      <label for="username" class="form-label">Username</label>
-      <input type="text" id="username" class="form-control" [(ngModel)]="username" name="username" autocomplete="username" required />
+      <label for="username" class="auth-label">Username</label>
+      <input type="text" id="username" class="auth-input" [(ngModel)]="username" name="username" autocomplete="username" required />
     </div>
 
     <div class="mb-4">
-      <label for="password" class="form-label">Password</label>
-      <input type="password" id="password" class="form-control" [(ngModel)]="password" name="password" autocomplete="new-password" required />
+      <label for="password" class="auth-label">Password</label>
+      <input type="password" id="password" class="auth-input" [(ngModel)]="password" name="password" autocomplete="new-password" required />
     </div>
 
-    <button type="submit" class="btn btn-primary w-100" [disabled]="loading() || !username || !password">
+    <button type="submit" class="auth-submit" [disabled]="loading() || !username || !password">
       @if (loading()) {
         <span class="spinner-border spinner-border-sm me-2"></span>
       }
