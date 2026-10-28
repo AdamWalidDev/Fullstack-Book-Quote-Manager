@@ -1,65 +1,99 @@
-<div class="d-flex justify-content-between align-items-center mb-3">
-  <h2 class="mb-0">My Citations</h2>
-</div>
-
-@if (error()) {
-  <div class="alert alert-warning">
-    <i class="fas fa-exclamation-triangle me-2"></i>{{ error() }}
-  </div>
-}
-
-<!-- Add / Edit form -->
-<div class="card mb-4">
-  <div class="card-body">
-    <h5 class="card-title">{{ isEdit ? 'Edit Citation' : 'Add Citation' }}</h5>
-    <form (ngSubmit)="onSubmit()">
-      <div class="mb-3">
-        <label for="text" class="form-label">Citation</label>
-        <textarea id="text" class="form-control" [(ngModel)]="text" name="text" rows="3" required></textarea>
-      </div>
-      <div class="mb-3">
-        <label for="author" class="form-label">Author</label>
-        <input id="author" class="form-control" [(ngModel)]="author" name="author" required />
-      </div>
-      <div class="d-flex gap-2">
-        <button type="submit" class="btn btn-primary" [disabled]="loading()">
-          <i class="fas fa-save me-1"></i>{{ isEdit ? 'Update' : 'Add' }}
-        </button>
-        @if (isEdit) {
-          <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
-        }
-      </div>
-    </form>
-  </div>
-</div>
-
-<!-- Citations list -->
-@if (citations().length === 0 && !error()) {
-  <div class="text-center py-5 text-muted">
-    <i class="fas fa-quote-left fa-2x mb-2"></i>
-    <p>No citations yet. Add your first one!</p>
-  </div>
-} @else {
-  <div class="list-group">
-    @for (citation of citations(); track citation.id) {
-      <div class="list-group-item">
-        <div class="d-flex justify-content-between align-items-start">
-          <div>
-            <p class="mb-1 fst-italic">"{{ citation.text }}"</p>
-            <small class="text-muted">
-              <i class="fas fa-user me-1"></i>{{ citation.author }}
-            </small>
-          </div>
-          <div class="d-flex gap-2">
-            <button class="btn btn-sm btn-outline-primary" (click)="startEdit(citation)">
-              <i class="fas fa-edit"></i>
-            </button>
-            <button class="btn btn-sm btn-outline-danger" (click)="deleteCitation(citation.id)">
-              <i class="fas fa-trash"></i>
-            </button>
-          </div>
-        </div>
-      </div>
+<div class="page">
+  <div class="page-header">
+    <div>
+      <p class="eyebrow">Collection</p>
+      <h1>My Quotes</h1>
+      <p class="subtitle">Your personal collection. Only you can see these.</p>
+    </div>
+    @if (!listLoading()) {
+      <span class="badge-soft">{{ citations().length }} {{ citations().length === 1 ? 'quote' : 'quotes' }}</span>
     }
   </div>
-}
+
+  @if (error()) {
+    <div class="alert alert-danger app-alert">
+      <i class="fas fa-circle-exclamation"></i>{{ error() }}
+    </div>
+  }
+
+  <div class="row g-4">
+    <!-- Add / Edit form -->
+    <div class="col-lg-4">
+      <div class="surface surface-body sticky-panel" [class.border-primary]="isEdit">
+        <h2 class="h6 mb-3 d-flex align-items-center gap-2">
+          <i class="fas" [class.fa-pen]="isEdit" [class.fa-plus]="!isEdit" style="color: var(--accent)"></i>
+          {{ isEdit ? 'Edit quote' : 'Add a quote' }}
+        </h2>
+        <form (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label for="text" class="form-label">Quote</label>
+            <textarea id="text" class="form-control" [(ngModel)]="text" name="text" rows="4" placeholder="Write or paste a quote…" required></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="author" class="form-label">Author</label>
+            <input id="author" class="form-control" [(ngModel)]="author" name="author" placeholder="Who said it?" required />
+          </div>
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary flex-grow-1" [disabled]="loading() || !text || !author">
+              @if (loading()) {
+                <span class="spinner-border spinner-border-sm me-2"></span>
+              }
+              {{ isEdit ? 'Save changes' : 'Add quote' }}
+            </button>
+            @if (isEdit) {
+              <button type="button" class="btn btn-outline-secondary" (click)="cancelEdit()">Cancel</button>
+            }
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Quotes -->
+    <div class="col-lg-8">
+      @if (listLoading()) {
+        <div class="quote-grid">
+          @for (row of [0, 1, 2, 3]; track row) {
+            <div class="surface quote-card">
+              <span class="skeleton mb-2" style="width: 95%"></span>
+              <span class="skeleton mb-2" style="width: 80%"></span>
+              <span class="skeleton mb-4" style="width: 55%"></span>
+              <span class="skeleton" style="width: 35%"></span>
+            </div>
+          }
+        </div>
+      } @else if (citations().length === 0 && !error()) {
+        <div class="surface empty-state">
+          <span class="empty-icon"><i class="fas fa-quote-left"></i></span>
+          <h3>No quotes yet</h3>
+          <p>Use the form to save your first quote.</p>
+        </div>
+      } @else {
+        <div class="quote-grid stagger">
+          @for (citation of citations(); track citation.id; let i = $index) {
+            <article
+              class="surface quote-card"
+              [style.--i]="i"
+              [class.editing]="editId === citation.id"
+              [class.removing]="removingId() === citation.id"
+            >
+              <i class="fas fa-quote-left quote-mark"></i>
+              <blockquote>{{ citation.text }}</blockquote>
+              <footer>
+                <span class="avatar round" [style.--hue]="hue(citation.author)">{{ initials(citation.author) }}</span>
+                <span class="text-truncate">{{ citation.author }}</span>
+                <span class="quote-actions">
+                  <button class="icon-btn borderless" (click)="startEdit(citation)" [attr.aria-label]="'Edit quote by ' + citation.author" title="Edit">
+                    <i class="fas fa-pen"></i>
+                  </button>
+                  <button class="icon-btn borderless danger" (click)="deleteCitation(citation.id)" [attr.aria-label]="'Delete quote by ' + citation.author" title="Delete">
+                    <i class="fas fa-trash-can"></i>
+                  </button>
+                </span>
+              </footer>
+            </article>
+          }
+        </div>
+      }
+    </div>
+  </div>
+</div>

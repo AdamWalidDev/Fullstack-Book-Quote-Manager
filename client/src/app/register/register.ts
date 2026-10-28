@@ -3,10 +3,11 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { describeHttpError } from '../services/http-error';
+import { AuthShell } from '../shared/auth-shell';
 
 @Component({
   selector: 'app-register',
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink, AuthShell],
   templateUrl: './register.html',
   styles: ``,
 })

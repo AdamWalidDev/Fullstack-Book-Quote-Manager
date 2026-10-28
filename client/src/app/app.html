@@ -1,61 +1,57 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-  <div class="container">
-    <a class="navbar-brand" routerLink="/">
-      <i class="fas fa-book me-2"></i>{{ title() }}
+<header class="app-nav">
+  <div class="container nav-inner">
+    <a class="brand" routerLink="/">
+      <span class="brand-mark"><i class="fas fa-quote-right"></i></span>
+      <span>{{ title() }}</span>
     </a>
 
-    <div class="d-flex align-items-center gap-2 d-md-none">
-      <button class="btn btn-outline-light btn-sm" (click)="themeService.toggle()">
-        <i class="fas" [class.fa-sun]="themeService.theme() === 'dark'"
-                       [class.fa-moon]="themeService.theme() === 'light'"></i>
-      </button>
-      <button class="navbar-toggler" type="button" (click)="navOpen = !navOpen"
-              aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    </div>
+    @if (auth.isLoggedIn()) {
+      <nav class="nav-links" [class.open]="navOpen">
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="navOpen = false">
+          <i class="fas fa-book"></i>Library
+        </a>
+        <a routerLink="/my-citations" routerLinkActive="active" (click)="navOpen = false">
+          <i class="fas fa-quote-left"></i>My Quotes
+        </a>
+      </nav>
+    }
 
-    <div class="collapse navbar-collapse" [class.show]="navOpen">
-      <ul class="navbar-nav ms-auto align-items-md-center gap-2">
-        <li class="nav-item d-none d-md-block">
-          <button class="btn btn-outline-light btn-sm" (click)="themeService.toggle()">
-            <i class="fas" [class.fa-sun]="themeService.theme() === 'dark'"
-                           [class.fa-moon]="themeService.theme() === 'light'"></i>
-          </button>
-        </li>
-        @if (auth.isLoggedIn()) {
-          <li class="nav-item">
-            <a routerLink="/" class="btn btn-outline-light btn-sm" (click)="navOpen = false">
-              <i class="fas fa-book me-1"></i>Books
-            </a>
-          </li>
-          <li class="nav-item">
-            <a routerLink="/my-citations" class="btn btn-outline-light btn-sm" (click)="navOpen = false">
-              <i class="fas fa-quote-left me-1"></i>My Citations
-            </a>
-          </li>
-          <li class="nav-item">
-            <button class="btn btn-outline-light btn-sm" (click)="auth.logout(); navOpen = false">
-              <i class="fas fa-sign-out-alt me-1"></i>Logout
-            </button>
-          </li>
-        } @else {
-          <li class="nav-item">
-            <a routerLink="/login" class="btn btn-outline-light btn-sm" (click)="navOpen = false">
-              <i class="fas fa-sign-in-alt me-1"></i>Login
-            </a>
-          </li>
-          <li class="nav-item">
-            <a routerLink="/register" class="btn btn-light btn-sm" (click)="navOpen = false">
-              <i class="fas fa-user-plus me-1"></i>Register
-            </a>
-          </li>
-        }
-      </ul>
+    <div class="nav-actions">
+      <button
+        class="icon-btn theme-toggle"
+        (click)="themeService.toggle()"
+        [attr.aria-label]="themeService.theme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
+      >
+        <i class="fas" [class.fa-sun]="themeService.theme() === 'dark'" [class.fa-moon]="themeService.theme() === 'light'"></i>
+      </button>
+
+      @if (auth.isLoggedIn()) {
+        <button class="btn btn-sm btn-ghost d-none d-md-inline-flex align-items-center" (click)="auth.logout()">
+          <i class="fas fa-arrow-right-from-bracket me-2"></i>Sign out
+        </button>
+        <button class="icon-btn d-md-none" (click)="navOpen = !navOpen" aria-label="Toggle navigation">
+          <i class="fas" [class.fa-bars]="!navOpen" [class.fa-xmark]="navOpen"></i>
+        </button>
+      } @else {
+        <a routerLink="/login" class="btn btn-sm btn-ghost">Sign in</a>
+        <a routerLink="/register" class="btn btn-sm btn-primary">Get started</a>
+      }
     </div>
   </div>
-</nav>
+</header>
 
-<div class="container">
+<main class="container app-main">
   <router-outlet />
-</div>
+</main>
+
+<footer class="container app-footer">
+  <span>© {{ year }} Quotebook · Built with .NET 9 &amp; Angular 20</span>
+  <span class="d-flex gap-3">
+    @if (auth.isLoggedIn()) {
+      <a href="#" class="d-md-none" (click)="$event.preventDefault(); auth.logout()">Sign out</a>
+    }
+    <a href="https://github.com/AdamWalidDev/Fullstack-Book-Quote-Manager" target="_blank" rel="noopener">
+      <i class="fab fa-github me-1"></i>Source code
+    </a>
+  </span>
+</footer>

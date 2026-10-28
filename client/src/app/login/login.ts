@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { describeHttpError } from '../services/http-error';
+import { AuthShell } from '../shared/auth-shell';
 
 // Public demo account (created automatically by the API at startup).
 const DEMO_USERNAME = 'demo';
@@ -10,7 +11,7 @@ const DEMO_PASSWORD = 'demo1234';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink, AuthShell],
   templateUrl: './login.html',
   styles: ``,
 })

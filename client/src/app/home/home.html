@@ -1,38 +1,117 @@
-<div class="d-flex justify-content-between align-items-center mb-3">
-  <h2 class="mb-0">Books</h2>
-  <a routerLink="/books/add" class="btn btn-primary">
-    <i class="fas fa-plus me-1"></i>Add New Book
-  </a>
-</div>
+<div class="page">
+  <div class="page-header">
+    <div>
+      <p class="eyebrow">Library</p>
+      <h1>Books</h1>
+      <p class="subtitle">Manage the shared book catalogue.</p>
+    </div>
+    <a routerLink="/books/add" class="btn btn-primary">
+      <i class="fas fa-plus me-2"></i>Add book
+    </a>
+  </div>
 
-@if (error()) {
-  <div class="alert alert-warning">
-    <i class="fas fa-exclamation-triangle me-2"></i>{{ error() }}
+  @if (error()) {
+    <div class="alert alert-danger app-alert">
+      <i class="fas fa-circle-exclamation"></i>{{ error() }}
+    </div>
+  }
+
+  <!-- Stats -->
+  <div class="stats stagger">
+    <div class="surface stat" style="--i: 0">
+      <span class="stat-label">Total books</span>
+      <span class="stat-value">{{ loading() ? '—' : books().length }}</span>
+      <span class="stat-icon"><i class="fas fa-book"></i></span>
+    </div>
+    <div class="surface stat" style="--i: 1">
+      <span class="stat-label">Authors</span>
+      <span class="stat-value">{{ loading() ? '—' : authorCount() }}</span>
+      <span class="stat-icon"><i class="fas fa-user-pen"></i></span>
+    </div>
+    <div class="surface stat" style="--i: 2">
+      <span class="stat-label">Most recent publication</span>
+      <span class="stat-value">{{ loading() ? '—' : (latestYear() ?? '—') }}</span>
+      <span class="stat-icon"><i class="fas fa-calendar"></i></span>
+    </div>
   </div>
-} @else if (books().length === 0) {
-  <div class="text-center py-5 text-muted">
-    <div class="spinner-border" role="status"></div>
-    <p class="mt-2">Loading...</p>
-  </div>
-} @else {
-  <div class="list-group">
-    @for (book of books(); track book.id) {
-      <div class="list-group-item d-flex justify-content-between align-items-center">
-        <div>
-          <h5 class="mb-1">{{ book.title }}</h5>
-          <p class="mb-0 text-muted">
-            <i class="fas fa-user me-1"></i>{{ book.author }}
-          </p>
+
+  <!-- Table -->
+  <div class="surface overflow-hidden">
+    <div class="table-toolbar">
+      <div class="search">
+        <i class="fas fa-magnifying-glass"></i>
+        <input
+          type="search"
+          class="form-control form-control-sm"
+          placeholder="Search by title or author…"
+          aria-label="Search books"
+          [ngModel]="query()"
+          (ngModelChange)="query.set($event)"
+        />
+      </div>
+      @if (!loading()) {
+        <span class="small text-muted">{{ filtered().length }} of {{ books().length }} books</span>
+      }
+    </div>
+
+    @if (loading()) {
+      <div class="dt-head"><span>Title</span><span>Author</span><span>Published</span><span></span></div>
+      @for (row of skeletonRows; track row) {
+        <div class="dt-row">
+          <div class="dt-title">
+            <span class="skeleton box"></span>
+            <span class="skeleton" [style.width.%]="70 - row * 8"></span>
+          </div>
+          <span class="skeleton" style="width: 55%"></span>
+          <span class="skeleton" style="width: 60%"></span>
+          <span></span>
         </div>
-        <div class="d-flex gap-2">
-          <a [routerLink]="['/books/edit', book.id]" class="btn btn-sm btn-outline-primary">
-            <i class="fas fa-edit"></i>
-          </a>
-          <button class="btn btn-sm btn-outline-danger" (click)="deleteBook(book.id)">
-            <i class="fas fa-trash"></i>
-          </button>
+      }
+    } @else if (filtered().length === 0) {
+      <div class="empty-state">
+        @if (books().length === 0) {
+          <span class="empty-icon"><i class="fas fa-book-open"></i></span>
+          <h3>No books yet</h3>
+          <p>Add the first book to start building your library.</p>
+          <a routerLink="/books/add" class="btn btn-primary btn-sm"><i class="fas fa-plus me-2"></i>Add book</a>
+        } @else {
+          <span class="empty-icon"><i class="fas fa-magnifying-glass"></i></span>
+          <h3>No matches</h3>
+          <p>No books match “{{ query() }}”.</p>
+          <button class="btn btn-outline-secondary btn-sm" (click)="query.set('')">Clear search</button>
+        }
+      </div>
+    } @else {
+      <div role="table" aria-label="Books">
+        <div class="dt-head" role="row">
+          <span role="columnheader">Title</span>
+          <span role="columnheader">Author</span>
+          <span role="columnheader">Published</span>
+          <span></span>
+        </div>
+        <div class="stagger">
+          @for (book of filtered(); track book.id; let i = $index) {
+            <div class="dt-row" role="row" [style.--i]="i" [class.removing]="removingId() === book.id">
+              <div class="dt-title" role="cell">
+                <span class="avatar" [style.--hue]="hue(book.title)">{{ initials(book.title) }}</span>
+                <span class="fw-medium" [title]="book.title">{{ book.title }}</span>
+              </div>
+              <div class="dt-author text-muted text-truncate" role="cell">{{ book.author }}</div>
+              <div class="dt-date" role="cell">
+                <span class="badge-soft">{{ book.publishedDate | date: 'MMM d, y' }}</span>
+              </div>
+              <div class="dt-actions" role="cell">
+                <a [routerLink]="['/books/edit', book.id]" class="icon-btn borderless" [attr.aria-label]="'Edit ' + book.title" title="Edit">
+                  <i class="fas fa-pen"></i>
+                </a>
+                <button class="icon-btn borderless danger" (click)="deleteBook(book)" [attr.aria-label]="'Delete ' + book.title" title="Delete">
+                  <i class="fas fa-trash-can"></i>
+                </button>
+              </div>
+            </div>
+          }
         </div>
       </div>
     }
   </div>
-}
+</div>

@@ -1,75 +1,61 @@
-<div class="row justify-content-center">
-  <div class="col-md-6">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <h3 class="card-title text-center mb-4">
-          <i class="fas fa-book me-2"></i>{{ isEdit ? 'Edit Book' : 'Add New Book' }}
-        </h3>
+<div class="page mx-auto" style="max-width: 640px">
+  <a routerLink="/" class="back-link"><i class="fas fa-arrow-left"></i>Back to library</a>
 
-        @if (error()) {
-          <div class="alert alert-danger">{{ error() }}</div>
-        }
+  <div class="page-header">
+    <div>
+      <p class="eyebrow">Library</p>
+      <h1>{{ isEdit ? 'Edit book' : 'Add a new book' }}</h1>
+      <p class="subtitle">
+        {{ isEdit ? 'Update the details below and save your changes.' : 'Fill in the details to add a book to the shared catalogue.' }}
+      </p>
+    </div>
+  </div>
 
-        @if (loading() && isEdit) {
-          <div class="text-center py-4">
-            <div class="spinner-border" role="status"></div>
+  @if (error()) {
+    <div class="alert alert-danger app-alert">
+      <i class="fas fa-circle-exclamation"></i>{{ error() }}
+    </div>
+  }
+
+  <div class="surface surface-body">
+    @if (loading() && isEdit && !title) {
+      <div class="d-grid gap-4">
+        @for (row of [0, 1, 2]; track row) {
+          <div>
+            <span class="skeleton mb-2" style="width: 90px"></span>
+            <span class="skeleton" style="height: 38px"></span>
           </div>
-        } @else {
-          <form (ngSubmit)="onSubmit()">
-            <div class="mb-3">
-              <label for="title" class="form-label">Title</label>
-              <input
-                type="text"
-                id="title"
-                class="form-control"
-                [(ngModel)]="title"
-                name="title"
-                required
-              />
-            </div>
-
-            <div class="mb-3">
-              <label for="author" class="form-label">Author</label>
-              <input
-                type="text"
-                id="author"
-                class="form-control"
-                [(ngModel)]="author"
-                name="author"
-                required
-              />
-            </div>
-
-            <div class="mb-3">
-              <label for="publishedDate" class="form-label">Published Date</label>
-              <input
-                type="date"
-                id="publishedDate"
-                class="form-control"
-                [(ngModel)]="publishedDate"
-                name="publishedDate"
-                required
-              />
-            </div>
-
-            <div class="d-flex gap-2">
-              <button
-                type="submit"
-                class="btn btn-primary flex-grow-1"
-                [disabled]="loading() || !title || !author || !publishedDate"
-              >
-                @if (loading()) {
-                  <span class="spinner-border spinner-border-sm me-1"></span>
-                }
-                <i class="fas fa-save me-1"></i>{{ isEdit ? 'Update' : 'Add' }}
-              </button>
-              <a routerLink="/" class="btn btn-outline-secondary">
-                <i class="fas fa-times me-1"></i>Cancel
-              </a>
-            </div>
-          </form>
         }
       </div>
-    </div>
+    } @else {
+      <form (ngSubmit)="onSubmit()" class="stagger">
+        <div class="mb-3" style="--i: 0">
+          <label for="title" class="form-label">Title</label>
+          <input type="text" id="title" class="form-control" [(ngModel)]="title" name="title" placeholder="e.g. Clean Code" required />
+        </div>
+
+        <div class="mb-3" style="--i: 1">
+          <label for="author" class="form-label">Author</label>
+          <input type="text" id="author" class="form-control" [(ngModel)]="author" name="author" placeholder="e.g. Robert C. Martin" required />
+        </div>
+
+        <div class="mb-4" style="--i: 2">
+          <label for="publishedDate" class="form-label">Published date</label>
+          <input type="date" id="publishedDate" class="form-control" [(ngModel)]="publishedDate" name="publishedDate" required />
+        </div>
+
+        <div class="d-flex gap-2 justify-content-end pt-3 border-top" style="--i: 3">
+          <a routerLink="/" class="btn btn-outline-secondary">Cancel</a>
+          <button type="submit" class="btn btn-primary px-4" [disabled]="loading() || !title || !author || !publishedDate">
+            @if (loading()) {
+              <span class="spinner-border spinner-border-sm me-2"></span>
+            } @else {
+              <i class="fas fa-check me-2"></i>
+            }
+            {{ isEdit ? 'Save changes' : 'Add book' }}
+          </button>
+        </div>
+      </form>
+    }
   </div>
 </div>
