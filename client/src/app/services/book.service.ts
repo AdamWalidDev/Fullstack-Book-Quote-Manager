@@ -1,3 +1,4 @@
+import { environment } from '../../environments/environment';
 import { HttpClient } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
 
@@ -8,7 +9,7 @@ export interface Book {
     publishedDate: string;
 }
 
-const API = 'https://redriver-test-assignment.onrender.com/api/books';
+const API = `${environment.apiUrl}/books`;
 
 @Injectable({ providedIn: 'root' })
 export class BookService {

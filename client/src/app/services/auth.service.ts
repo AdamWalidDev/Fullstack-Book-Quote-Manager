@@ -1,3 +1,4 @@
+import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal, computed } from '@angular/core';
 import { Router } from '@angular/router';
@@ -18,7 +19,7 @@ interface RegisterRequest {
 }
 
 // Base URL for auth API
-const API = 'https://redriver-test-assignment.onrender.com/api/auth';
+const API = `${environment.apiUrl}/auth`;
 // Key used to store the token in localStorage
 const TOKEN_KEY = 'jwt_token';
 

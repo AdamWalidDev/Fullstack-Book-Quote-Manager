@@ -1,3 +1,4 @@
+import { environment } from '../../environments/environment';
 import { HttpClient } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
 
@@ -9,7 +10,7 @@ export interface Citation {
 }
 
 // url for my citations
-const API = 'https://redriver-test-assignment.onrender.com/api/my-citations';
+const API = `${environment.apiUrl}/my-citations`;
 
 @Injectable({ providedIn: 'root' })
 export class CitationService {
