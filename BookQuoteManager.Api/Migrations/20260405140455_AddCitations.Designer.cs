@@ -4,15 +4,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using RedRiverTest.Api.Data;
+using BookQuoteManager.Api.Data;
 
 #nullable disable
 
-namespace RedRiverTest.Api.Migrations
+namespace BookQuoteManager.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20261027135810_AddUsers")]
-    partial class AddUsers
+    [Migration("20260405140455_AddCitations")]
+    partial class AddCitations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,7 +20,7 @@ namespace RedRiverTest.Api.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.14");
 
-            modelBuilder.Entity("RedRiverTest.Api.Models.Book", b =>
+            modelBuilder.Entity("BookQuoteManager.Api.Models.Book", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -42,7 +42,7 @@ namespace RedRiverTest.Api.Migrations
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("RedRiverTest.Api.Models.Citation", b =>
+            modelBuilder.Entity("BookQuoteManager.Api.Models.Citation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -63,29 +63,6 @@ namespace RedRiverTest.Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Citations");
-                });
-
-            modelBuilder.Entity("RedRiverTest.Api.Models.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .UseCollation("NOCASE");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Username")
-                        .IsUnique();
-
-                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }

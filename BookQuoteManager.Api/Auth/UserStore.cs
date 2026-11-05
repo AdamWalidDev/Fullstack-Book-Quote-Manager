@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Identity;
-using RedRiverTest.Api.Data;
-using RedRiverTest.Api.Models;
+using BookQuoteManager.Api.Data;
+using BookQuoteManager.Api.Models;
 
-namespace RedRiverTest.Api.Auth;
+namespace BookQuoteManager.Api.Auth;
 
 public interface IUserStore
 {

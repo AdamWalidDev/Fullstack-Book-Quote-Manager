@@ -1,4 +1,4 @@
-# Quotebook
+# BookQuoteManager
 
 **A fullstack book & quote manager** built with **.NET 9 Web API** and **Angular 20**.
 
@@ -43,7 +43,7 @@ Click **Try the demo** on the login page — no sign-up needed (demo account: `d
 ### 1. Run the API
 
 ```bash
-cd RedRiverTest.Api
+cd BookQuoteManager.Api
 dotnet run
 ```
 
@@ -62,7 +62,7 @@ Open [http://localhost:4200](http://localhost:4200) in your browser.
 ## Project Structure
 
 ```
-RedRiverTest.Api/               # .NET 9 Web API (folder name kept from the original assignment)
+BookQuoteManager.Api/          # .NET 9 Web API
 ├── Controllers/
 │   ├── AuthController.cs       # Register & login endpoints
 │   ├── BooksController.cs      # Book CRUD (all users)
@@ -106,3 +106,6 @@ For the deployed frontend, set `AllowedOrigins__0` to `https://bok-citathanterin
 (without a path or trailing slash). In the Render dashboard, save environment changes with
 **Save and deploy** so the running API uses them. The same origin is included in
 `render.yaml` and the API's default configuration; localhost remains allowed for development.
+
+The existing Render service name and live URLs are intentionally preserved during the project rename.
+The ZIP archive at the repository root is a historical snapshot and is not part of the active build.

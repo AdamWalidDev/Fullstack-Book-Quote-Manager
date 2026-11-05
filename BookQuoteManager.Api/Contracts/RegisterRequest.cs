@@ -1,6 +1,6 @@
-﻿namespace RedRiverTest.Api.Contracts
+﻿namespace BookQuoteManager.Api.Contracts
 {
-	public class LoginRequest
+	public class RegisterRequest
 	{
        public string Username { get; set; } = string.Empty;
 		public string Password { get; set; } = string.Empty;

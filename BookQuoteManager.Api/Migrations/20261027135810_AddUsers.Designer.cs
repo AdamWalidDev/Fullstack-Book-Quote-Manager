@@ -2,22 +2,25 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using RedRiverTest.Api.Data;
+using BookQuoteManager.Api.Data;
 
 #nullable disable
 
-namespace RedRiverTest.Api.Migrations
+namespace BookQuoteManager.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20261027135810_AddUsers")]
+    partial class AddUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.14");
 
-            modelBuilder.Entity("RedRiverTest.Api.Models.Book", b =>
+            modelBuilder.Entity("BookQuoteManager.Api.Models.Book", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -39,7 +42,7 @@ namespace RedRiverTest.Api.Migrations
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("RedRiverTest.Api.Models.Citation", b =>
+            modelBuilder.Entity("BookQuoteManager.Api.Models.Citation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -62,7 +65,7 @@ namespace RedRiverTest.Api.Migrations
                     b.ToTable("Citations");
                 });
 
-            modelBuilder.Entity("RedRiverTest.Api.Models.User", b =>
+            modelBuilder.Entity("BookQuoteManager.Api.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
