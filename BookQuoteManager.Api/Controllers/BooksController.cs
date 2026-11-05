@@ -1,10 +1,10 @@
-﻿using RedRiverTest.Api.Models;
+﻿using BookQuoteManager.Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
-using RedRiverTest.Api.Data;
+using BookQuoteManager.Api.Data;
 
-namespace RedRiverTest.Api.Controllers
+namespace BookQuoteManager.Api.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]

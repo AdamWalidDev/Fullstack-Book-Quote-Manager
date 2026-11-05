@@ -1,4 +1,4 @@
-namespace RedRiverTest.Api.Models
+namespace BookQuoteManager.Api.Models
 {
 	public class User
 	{
