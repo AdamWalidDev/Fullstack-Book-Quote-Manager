@@ -92,26 +92,6 @@ body {
 }
 
 // ── Animations ───────────────────────────────────────────────
-@keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
 @keyframes slide-down {
   from {
     opacity: 0;
@@ -139,17 +119,6 @@ body {
   to {
     background-position: 32px 32px;
   }
-}
-
-// Page entrance (applied to each routed page)
-.page {
-  animation: fade-up 0.45s var(--ease) both;
-}
-
-// Staggered children: set [style.--i]="$index" on each child
-.stagger > * {
-  animation: fade-up 0.4s var(--ease) both;
-  animation-delay: calc(var(--i, 0) * 45ms);
 }
 
 // Rows being deleted fade + collapse out
@@ -230,7 +199,6 @@ body {
     height: 72px;
     border-radius: 18px;
     font-size: 1.75rem;
-    animation: fade-up 0.6s var(--ease) both;
 
     svg {
       width: 42px;
@@ -290,7 +258,6 @@ body {
         height: 2px;
         border-radius: 2px;
         background: var(--accent);
-        animation: fade-in 0.3s ease both;
       }
     }
   }
@@ -809,7 +776,6 @@ body {
 .empty-state {
   padding: 3.5rem 1.5rem;
   text-align: center;
-  animation: fade-in 0.4s ease both;
 
   .empty-icon {
     display: inline-grid;
