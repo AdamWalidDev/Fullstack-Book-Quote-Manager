@@ -4,7 +4,6 @@
 
 Browse a shared book library and keep a personal collection of your favourite quotes. Includes JWT authentication, protected routes, per-user data, and a light/dark theme.
 
-> Originally built as an internship technical assignment, later extended and rebranded with persistent users, hashed passwords, a one-click demo account, and UI polish.
 
 ## Live Demo
 
