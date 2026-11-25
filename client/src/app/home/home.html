@@ -17,18 +17,18 @@
   }
 
   <!-- Stats -->
-  <div class="stats stagger">
-    <div class="surface stat" style="--i: 0">
+  <div class="stats">
+    <div class="stat">
       <span class="stat-label">Total books</span>
       <span class="stat-value">{{ loading() ? '—' : books().length }}</span>
       <span class="stat-icon"><i class="fas fa-book"></i></span>
     </div>
-    <div class="surface stat" style="--i: 1">
+    <div class="stat">
       <span class="stat-label">Authors</span>
       <span class="stat-value">{{ loading() ? '—' : authorCount() }}</span>
       <span class="stat-icon"><i class="fas fa-user-pen"></i></span>
     </div>
-    <div class="surface stat" style="--i: 2">
+    <div class="stat">
       <span class="stat-label">Most recent publication</span>
       <span class="stat-value">{{ loading() ? '—' : (latestYear() ?? '—') }}</span>
       <span class="stat-icon"><i class="fas fa-calendar"></i></span>

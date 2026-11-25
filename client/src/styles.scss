@@ -552,12 +552,8 @@ body {
   position: relative;
   padding: 1.1rem 1.25rem;
   overflow: hidden;
-  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-  }
+  background: var(--surface);
+  border-radius: var(--bs-border-radius);
 }
 
 .stat-label {
