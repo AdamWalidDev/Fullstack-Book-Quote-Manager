@@ -1,6 +1,6 @@
-# Fullstack Book & Quote Manager
+# BookQuoteManager client
 
-Formerly known as "RedRiverTest.Api"
+Angular frontend for BookQuoteManager.
 
 This project is a fullstack application for managing books and quotes. It features user authentication, book management, citation/quote management, and a modern Angular frontend.
 

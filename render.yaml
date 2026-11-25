@@ -1,5 +1,6 @@
 services:
   - type: web
+    # Existing service identity; retained to preserve the current deployment.
     name: redrivertest-api
     runtime: docker
     dockerfilePath: ./Dockerfile

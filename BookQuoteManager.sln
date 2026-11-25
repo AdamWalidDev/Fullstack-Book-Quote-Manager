@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedRiverTest.Api", "RedRiverTest.Api\RedRiverTest.Api.csproj", "{5F663552-00DC-468F-8140-933399213438}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookQuoteManager.Api", "BookQuoteManager.Api\BookQuoteManager.Api.csproj", "{5F663552-00DC-468F-8140-933399213438}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

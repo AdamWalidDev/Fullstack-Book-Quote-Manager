@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RedRiverTest.Api.Auth;
-using RedRiverTest.Api.Contracts;
+using BookQuoteManager.Api.Auth;
+using BookQuoteManager.Api.Contracts;
 
-namespace RedRiverTest.Api.Controllers;
+namespace BookQuoteManager.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

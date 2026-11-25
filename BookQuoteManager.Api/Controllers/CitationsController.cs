@@ -1,10 +1,10 @@
-﻿using RedRiverTest.Api.Models;
+﻿using BookQuoteManager.Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using RedRiverTest.Api.Data;
+using BookQuoteManager.Api.Data;
 using Microsoft.AspNetCore.Authorization;
 
-namespace RedRiverTest.Api.Controllers
+namespace BookQuoteManager.Api.Controllers
 {
 
  [Route("api/my-citations")]

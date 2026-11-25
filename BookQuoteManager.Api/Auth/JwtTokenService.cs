@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace RedRiverTest.Api.Auth;
+namespace BookQuoteManager.Api.Auth;
 
 public interface IJwtTokenService
 {

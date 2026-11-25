@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using RedRiverTest.Api.Auth;
+using BookQuoteManager.Api.Auth;
 using Scalar.AspNetCore;
 using System.Text;
 
@@ -51,12 +51,12 @@ builder.Services
 builder.Services.AddAuthorization();
 
 // Users stored in the database (hashed passwords) + token creator.
-builder.Services.AddScoped<IPasswordHasher<RedRiverTest.Api.Models.User>, PasswordHasher<RedRiverTest.Api.Models.User>>();
+builder.Services.AddScoped<IPasswordHasher<BookQuoteManager.Api.Models.User>, PasswordHasher<BookQuoteManager.Api.Models.User>>();
 builder.Services.AddScoped<IUserStore, DbUserStore>();
 builder.Services.AddSingleton<IJwtTokenService, JwtTokenService>();
 
 // SQLite database for books, citations and users.
-builder.Services.AddDbContext<RedRiverTest.Api.Data.AppDbContext>(options =>
+builder.Services.AddDbContext<BookQuoteManager.Api.Data.AppDbContext>(options =>
 	options.UseSqlite("Data Source=books.db"));
 
 // Allowed frontend origins: everything in config (AllowedOrigins array, or a comma-separated
@@ -82,16 +82,16 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
-	var db = scope.ServiceProvider.GetRequiredService<RedRiverTest.Api.Data.AppDbContext>();
+	var db = scope.ServiceProvider.GetRequiredService<BookQuoteManager.Api.Data.AppDbContext>();
     db.Database.Migrate();
 	if (!db.Books.Any())
 	{
 		// Seed a few books so the list is not empty.
 		db.Books.AddRange(
-			new RedRiverTest.Api.Models.Book { Title = "Clean Code", Author = "Robert C. Martin", PublishedDate = new DateTime(2008, 8, 1) },
-			new RedRiverTest.Api.Models.Book { Title = "The Pragmatic Programmer", Author = "Andrew Hunt & David Thomas", PublishedDate = new DateTime(1999, 10, 20) },
-			new RedRiverTest.Api.Models.Book { Title = "Refactoring", Author = "Martin Fowler", PublishedDate = new DateTime(1999, 7, 8) },
-			new RedRiverTest.Api.Models.Book { Title = "Designing Data-Intensive Applications", Author = "Martin Kleppmann", PublishedDate = new DateTime(2017, 3, 16) }
+			new BookQuoteManager.Api.Models.Book { Title = "Clean Code", Author = "Robert C. Martin", PublishedDate = new DateTime(2008, 8, 1) },
+			new BookQuoteManager.Api.Models.Book { Title = "The Pragmatic Programmer", Author = "Andrew Hunt & David Thomas", PublishedDate = new DateTime(1999, 10, 20) },
+			new BookQuoteManager.Api.Models.Book { Title = "Refactoring", Author = "Martin Fowler", PublishedDate = new DateTime(1999, 7, 8) },
+			new BookQuoteManager.Api.Models.Book { Title = "Designing Data-Intensive Applications", Author = "Martin Kleppmann", PublishedDate = new DateTime(2017, 3, 16) }
 		);
 		db.SaveChanges();
 	}

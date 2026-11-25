@@ -1,4 +1,4 @@
-﻿namespace RedRiverTest.Api.Auth;
+﻿namespace BookQuoteManager.Api.Auth;
 
 public sealed class JwtOptions
 {

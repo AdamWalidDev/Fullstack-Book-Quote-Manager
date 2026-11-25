@@ -59,7 +59,7 @@
 </main>
 
 <footer class="container app-footer" [class.auth-footer]="isAuthRoute">
-  <span>© {{ year }} Quotebook · Built with .NET 9 &amp; Angular 20</span>
+  <span>© {{ year }} Quotebook</span>
   <span class="d-flex gap-3">
     @if (auth.isLoggedIn() && !isAuthRoute) {
       <a href="#" class="d-md-none" (click)="$event.preventDefault(); auth.logout()">Sign out</a>

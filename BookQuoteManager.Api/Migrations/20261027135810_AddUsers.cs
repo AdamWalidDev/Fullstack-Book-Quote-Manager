@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace RedRiverTest.Api.Migrations
+namespace BookQuoteManager.Api.Migrations
 {
     /// <inheritdoc />
     public partial class AddUsers : Migration
