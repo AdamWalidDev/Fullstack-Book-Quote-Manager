@@ -887,23 +887,6 @@ body {
     margin-left: auto;
     display: flex;
     gap: 0.25rem;
-    opacity: 0;
-    transform: translateX(4px);
-    transition: opacity 0.2s ease, transform 0.2s var(--ease);
-  }
-
-  &:hover .quote-actions,
-  &:focus-within .quote-actions,
-  &.editing .quote-actions {
-    opacity: 1;
-    transform: none;
-  }
-
-  @media (hover: none) {
-    .quote-actions {
-      opacity: 1;
-      transform: none;
-    }
   }
 }
 
